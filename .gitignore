@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# 本地素材与截图（不上传）
+.playwright-mcp/
+resume-desktop.png
+c220b8ea836d954ce86ea551fc23e1f7.jpg
+微信图片*.jpg

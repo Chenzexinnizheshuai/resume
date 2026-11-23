@@ -1,121 +1,275 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
+import type { CSSProperties } from 'react'
+import photo from './assets/photo.jpg'
+import {
+  profile,
+  jobs,
+  edu,
+  campus,
+  stickers,
+  tools,
+  stats,
+  about,
+} from './data/resume'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+// ---- 关键词荧光笔高亮 ----
+const HL_YELLOW = ['从0到1', '百城百站', '三层治理', '四表协同', '猜你想问']
+const HL_GREEN = [
+  '18站',
+  '14站',
+  '125站',
+  '102站',
+  '数百条QA',
+  '2586人',
+  '2300人',
+  '79.7%',
+  '1-2小时',
+  '155篇',
+  '100w+',
+  '2W+',
+  '75篇',
+  '60%',
+  '1700+',
+  '10w+',
+  '5000+',
+  'CET-6',
+  '普通话二甲',
+]
 
+function hl(text: string) {
+  const terms = [
+    ...HL_YELLOW.map((t) => ({ t, c: 'hl-y' })),
+    ...HL_GREEN.map((t) => ({ t, c: 'hl-g' })),
+  ].sort((a, b) => b.t.length - a.t.length)
+  const re = new RegExp(
+    `(${terms.map((x) => x.t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`,
+    'g',
+  )
+  return text.split(re).map((part, i) => {
+    const hit = terms.find((x) => x.t === part)
+    return hit ? (
+      <mark key={i} className={hit.c}>
+        {part}
+      </mark>
+    ) : (
+      part
+    )
+  })
+}
+
+const CIRCLED = ['①', '②', '③', '④', '⑤']
+
+function SecTitle({ zh, en }: { zh: string; en: string }) {
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <h2 className="sec">
+      <em>{zh}</em>
+      <small>{en}</small>
+    </h2>
+  )
+}
 
-      <div className="ticks"></div>
+function PaperClip() {
+  return (
+    <svg className="clip" viewBox="0 0 30 64" aria-hidden="true">
+      <path
+        d="M10 10 V46 A6 6 0 0 0 22 46 V14 A3.5 3.5 0 0 1 29 14 V42"
+        fill="none"
+        stroke="#9aa0a6"
+        strokeWidth="4"
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+function App() {
+  return (
+    <div className="board">
+      <main className="sheet">
+        {/* ===== 顶部：证件卡 + 手写便签 ===== */}
+        <header className="header">
+          <div className="idcard">
+            <PaperClip />
+            <div className="photozone">
+              <span className="yblock" />
+              <img className="photo" src={photo} alt={`${profile.name} 照片`} />
+            </div>
+            <div className="idtext">
+              <h1>{profile.name}</h1>
+              <p className="title">{profile.title}</p>
+              <p className="tag">{profile.tagline}</p>
+              <div className="infogrid">
+                <p className="row">
+                  <span className="ico">☎</span>
+                  <span className="v">{profile.phone}</span>
+                </p>
+                <p className="row">
+                  <span className="ico">✉</span>
+                  <span className="v">{profile.email}</span>
+                </p>
+                <p className="row">
+                  <span className="ico">微</span>
+                  <span className="v">微信 {profile.wechat}</span>
+                </p>
+                <p className="row">
+                  <span className="ico">语</span>
+                  <span className="v">{profile.langs}</span>
+                </p>
+              </div>
+            </div>
+          </div>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+          <div className="handnote">
+            <p className="note">
+              如果这份简历没能<span className="circle-word">讲清楚我</span>
+              ，<br />
+              欢迎随时找我要补充～
+            </p>
+            <p className="num">
+              <span className="hico red">☎</span> {profile.phone}
+            </p>
+            <p className="num">
+              <span className="bbox">微</span> 微信同号 · 期待聊聊 AI 与增长
+            </p>
+          </div>
+        </header>
+
+        <div className="columns">
+          {/* ===== 左列：经历 ===== */}
+          <section className="col-l">
+            <SecTitle zh="工作经历" en="Experience" />
+            <div className="timeline">
+              {jobs.map((j) => (
+                <article className="tl-item" key={j.company}>
+                  <p className="period">
+                    <b>{j.period}</b>
+                    {j.tag && <span className="hl-g jtag">{j.tag}</span>}
+                  </p>
+                  <h3 className="role">{j.role}</h3>
+                  <p className="org">
+                    {j.company}
+                    {j.dept && <span className="dept"> ｜ {j.dept}</span>}
+                  </p>
+                  {j.summary && <p className="jsummary">{hl(j.summary)}</p>}
+                  {j.groups?.map((g, gi) => (
+                    <div className="grp" key={g.title}>
+                      <h4>
+                        {CIRCLED[gi]} {g.title}
+                      </h4>
+                      {g.points.map((p, pi) => (
+                        <p className="pt" key={pi}>
+                          {hl(p)}
+                        </p>
+                      ))}
+                    </div>
+                  ))}
+                  {j.bullets?.map((b) => (
+                    <p className="pt" key={b.t}>
+                      <b>{b.t}：</b>
+                      {hl(b.text)}
+                    </p>
+                  ))}
+                </article>
+              ))}
+            </div>
+
+            <SecTitle zh="教育背景" en="Education" />
+            <div className="timeline">
+              <article className="tl-item">
+                <p className="period">
+                  <b>{edu.period}</b>
+                </p>
+                <h3 className="role">
+                  {edu.school} <span className="major">{edu.major}</span>
+                </h3>
+                <p className="pt">{edu.courses}</p>
+              </article>
+            </div>
+
+            <SecTitle zh="校园经历" en="Campus" />
+            <div className="timeline">
+              <article className="tl-item">
+                <p className="period">
+                  <b>{campus.period}</b>
+                </p>
+                <h3 className="role">{campus.org}</h3>
+                <p className="org">{campus.role}</p>
+                {campus.bullets.map((b) => (
+                  <p className="pt" key={b.t}>
+                    <b>{b.t}：</b>
+                    {b.text}
+                  </p>
+                ))}
+              </article>
+            </div>
+          </section>
+
+          {/* ===== 右列：拼贴 / 技能 / 便签 / 关于 ===== */}
+          <aside className="col-r">
+            <SecTitle zh="能力拼贴" en="Area of Expertise" />
+            <div className="stickerboard">
+              {stickers.map((s) => (
+                <span
+                  key={s.label}
+                  className={`sticker s-${s.shape}`}
+                  style={{ whiteSpace: 'pre-line' }}
+                >
+                  {s.label}
+                </span>
+              ))}
+            </div>
+
+            <SecTitle zh="工具技能" en="Software Skills" />
+            <div className="tools">
+              {tools.map((t) => (
+                <div
+                  className="tool"
+                  key={t.name}
+                  style={
+                    { '--c': t.color, '--v': `${t.level}%` } as CSSProperties
+                  }
+                >
+                  <span className="ticon">{t.abbr}</span>
+                  <span className="tname">{t.name}</span>
+                  <span className="slider">
+                    <i />
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            <div className="sticky">
+              <h3>✦ 数据亮点 Numbers</h3>
+              <div className="statlist">
+                {stats.map((s) => (
+                  <p className="stat" key={s.desc}>
+                    <b>{s.num}</b>
+                    <span>{s.desc}</span>
+                  </p>
+                ))}
+              </div>
+            </div>
+
+            <SecTitle zh="关于我" en="About" />
+            <div className="about">
+              <p>{hl(about.text)}</p>
+              <p className="chips">
+                {about.tags.map((t) => (
+                  <span className="chip" key={t}>
+                    {t}
+                  </span>
+                ))}
+              </p>
+            </div>
+          </aside>
+        </div>
+
+        <footer className="footer">
+          <p className="sig">{profile.name} · 2026.11</p>
+          <p className="madeby">本页由 React + Vite 手工搭建 ✦ 浏览器打印可导出同款 PDF</p>
+        </footer>
+      </main>
+    </div>
   )
 }
 
