@@ -1,4 +1,4 @@
-// 简历内容数据源（与根目录 resume.md 对应，改内容只改这里）
+// 简历内容数据源（与 docs/简历内容.md 对应，改内容改这里）
 
 export const profile = {
   name: '王雨虹',

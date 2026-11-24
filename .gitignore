@@ -23,14 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 
-# 本地素材与截图（不上传）
+# 工具产物与本地归档（不上传）
 .playwright-mcp/
-resume-desktop.png
-c220b8ea836d954ce86ea551fc23e1f7.jpg
-微信图片*.jpg
+archive/
 
-# 验收截图（本地临时文件）
-/resume-*.png
-/a2b-*.png
-
-/resume-dist.zip
+# 说明：materials/（原始素材）与 screenshots/（验收截图）已纳入版本管理
