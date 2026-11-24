@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 34" preserveAspectRatio="none">
+  <defs>
+    <filter id="wob-g" x="-6%" y="-15%" width="112%" height="130%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.014 0.075" numOctaves="2" seed="13" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="11.5"/>
+    </filter>
+  </defs>
+  <g filter="url(#wob-g)">
+    <path d="M6 8.5 L293 11.5 L294 26.5 L5 24 Z" fill="#8be0a4" fill-opacity="0.93"/>
+    <path d="M10 10 L290 12.5 L290 16.5 L10 14.5 Z" fill="#d6f9df" fill-opacity="0.6"/>
+    <path d="M8 21 L291 23 L292 26.5 L9 24.5 Z" fill="#5cc47e" fill-opacity="0.5"/>
+  </g>
+</svg>

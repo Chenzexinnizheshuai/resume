@@ -211,22 +211,32 @@
   font-size: 13px;
 }
 
-/* ================= 荧光笔 ================= */
+/* ================= 荧光笔：手绘马克笔笔触 ================= */
 mark {
-  padding: 1px 4px;
-  border-radius: 3px;
+  padding: 0.12em 0.38em;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
   background: transparent;
   color: inherit;
 }
 
+.hl-y,
+.hl-g {
+  padding: 0.12em 0.38em;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
 .hl-y {
-  background: #ffe95c;
+  background-image: url('./assets/brush-yellow.svg');
 }
 
 .hl-g {
-  background: rgba(110, 231, 183, 0.85);
+  background-image: url('./assets/brush-green.svg');
 }
 
 /* ================= 栏与标题 ================= */
@@ -251,10 +261,13 @@ h2.sec {
 
 h2.sec em {
   font-style: normal;
-  background: #ffe95c;
-  padding: 2px 12px 4px;
-  border-radius: 4px;
-  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.08);
+  padding: 3px 14px 5px;
+  background-image: url('./assets/brush-yellow.svg');
+  background-repeat: no-repeat;
+  background-size: 100% 92%;
+  background-position: 0 55%;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
 }
 
 h2.sec small {
