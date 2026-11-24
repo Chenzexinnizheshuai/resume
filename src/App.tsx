@@ -208,15 +208,32 @@ function App() {
           <aside className="col-r">
             <SecTitle zh="能力拼贴" en="Area of Expertise" />
             <div className="stickerboard">
-              {stickers.map((s) => (
+              <span className="board-caption">主打能力就是这几个 ↓</span>
+              <span className="board-phrase phrase-1">会写 Prompt 的运营～</span>
+              <span className="board-phrase phrase-2">从 0 到 1 上瘾者</span>
+              {stickers.map((s, i) => (
                 <span
                   key={s.label}
-                  className={`sticker s-${s.shape}`}
+                  className={`sticker s-${s.shape} pos-${i + 1}`}
                   style={{ whiteSpace: 'pre-line' }}
                 >
                   {s.label}
                 </span>
               ))}
+              <svg className="doodle d-arrow" viewBox="0 0 90 60" aria-hidden="true">
+                <path d="M6 8 C 30 12, 58 26, 74 46" />
+                <path d="M60 42 L76 48 L72 32" />
+              </svg>
+              <svg className="doodle d-star" viewBox="0 0 44 44" aria-hidden="true">
+                <path d="M22 6 V 38 M6 22 H 38" />
+                <path d="M12 12 L 32 32 M32 12 L 12 32" opacity="0.45" />
+              </svg>
+              <svg className="doodle d-star2" viewBox="0 0 44 44" aria-hidden="true">
+                <path d="M22 8 V 36 M8 22 H 36" />
+              </svg>
+              <svg className="doodle d-wave" viewBox="0 0 100 20" aria-hidden="true">
+                <path d="M4 12 q 11 -12 22 0 t 22 0 t 22 0" />
+              </svg>
             </div>
 
             <SecTitle zh="工具技能" en="Software Skills" />

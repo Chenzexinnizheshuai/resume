@@ -379,17 +379,26 @@ h2.sec small {
   text-align: justify;
 }
 
-/* ================= 能力拼贴 ================= */
+/* ================= 能力拼贴：叠压 collage ================= */
 .stickerboard {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 20px 18px;
-  padding: 10px 4px 16px;
+  position: relative;
+  height: 440px;
+  margin: 6px 0 30px;
+}
+
+.board-caption {
+  position: absolute;
+  left: 2px;
+  top: -4px;
+  transform: rotate(-2deg);
+  font-family: 'Ma Shan Zheng', cursive;
+  color: #d63c3c;
+  font-size: 19px;
+  z-index: 5;
 }
 
 .sticker {
+  position: absolute;
   font-family: 'ZCOOL QingKe HuangYou', 'Noto Sans SC', sans-serif;
   font-size: 14px;
   line-height: 1.35;
@@ -400,35 +409,52 @@ h2.sec small {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.16);
 }
 
+/* 叠压错落布局（百分比定位，窄屏自适应） */
+.pos-1 { left: 0;    top: 46px;  transform: rotate(-12deg); z-index: 3; }
+.pos-2 { left: 46%;  top: 26px;  transform: rotate(6deg);   z-index: 2; }
+.pos-3 { left: 24%;  top: 138px; transform: rotate(-7deg);  z-index: 3; }
+.pos-4 { left: 3%;   top: 235px; transform: rotate(-3deg);  z-index: 1; }
+.pos-5 { left: 35%;  top: 366px; transform: rotate(4deg);   z-index: 2; }
+.pos-6 { left: 61%;  top: 258px; transform: rotate(7deg);   z-index: 2; }
+
+/* 手写短句填空隙 */
+.board-phrase {
+  position: absolute;
+  font-family: 'Ma Shan Zheng', cursive;
+  font-size: 18px;
+  z-index: 5;
+  white-space: nowrap;
+}
+
+.phrase-1 { right: 4%;  top: 150px; color: #d63c3c; transform: rotate(6deg); }
+.phrase-2 { left: 5%;   top: 400px; color: #2b6cb0; transform: rotate(-3deg); }
+
 .s-tape {
   background: linear-gradient(180deg, #ecd7a2, #dfb978);
   color: #4c3312;
   padding: 15px 22px;
   border-radius: 3px;
-  transform: rotate(-8deg);
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }
 
 .s-tri {
-  width: 132px;
-  height: 122px;
+  width: 150px;
+  height: 138px;
   background: #e4574f;
   color: #fff;
   clip-path: polygon(50% 0, 100% 100%, 0 100%);
   align-items: end;
-  padding-bottom: 20px;
-  transform: rotate(-3deg);
+  padding-bottom: 22px;
   box-shadow: none;
   filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.2));
 }
 
 .s-circ {
-  width: 128px;
-  height: 128px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   background: #7ec7e8;
   color: #0a4a63;
-  transform: rotate(4deg);
 }
 
 .s-rect {
@@ -436,7 +462,6 @@ h2.sec small {
   color: #143a1f;
   padding: 13px 18px;
   border-radius: 3px;
-  transform: rotate(5deg);
 }
 
 .s-rect2 {
@@ -444,7 +469,6 @@ h2.sec small {
   color: #4a3a05;
   padding: 13px 18px;
   border-radius: 3px;
-  transform: rotate(-5deg);
 }
 
 .s-note {
@@ -453,7 +477,38 @@ h2.sec small {
   color: #111;
   padding: 12px 16px;
   border-radius: 3px;
-  transform: rotate(2deg);
+}
+
+/* ---- 涂鸦元素 ---- */
+.doodle {
+  position: absolute;
+  pointer-events: none;
+  z-index: 4;
+  overflow: visible;
+}
+
+.doodle path {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.d-arrow { left: 29%; top: 262px; width: 88px; }
+.d-arrow path { stroke: #d63c3c; stroke-width: 3; }
+
+.d-star { left: 36%; top: 88px; width: 40px; }
+.d-star path { stroke: #e8a825; stroke-width: 3; }
+
+.d-star2 { left: 8%; top: 160px; width: 26px; }
+.d-star2 path { stroke: #d63c3c; stroke-width: 2.5; }
+
+.d-wave { left: 58%; top: 382px; width: 132px; }
+.d-wave path { stroke: #3f9d5f; stroke-width: 2.5; }
+
+@media (max-width: 920px) {
+  .stickerboard {
+    height: 470px;
+  }
 }
 
 /* ================= 工具技能 ================= */
